@@ -9,5 +9,5 @@ import lombok.ToString;
 @NoArgsConstructor
 public class MailSaveDto {
 
-	private String title;
+	private String emailText;
 }

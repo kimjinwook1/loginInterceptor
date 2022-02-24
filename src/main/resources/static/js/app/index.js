@@ -15,7 +15,7 @@ var main = {
   },
   save: function () {
     var data = {
-      title: $('#title').val(),
+      emailText: $('#emailText').val(),
       // author: $('#author').val(),
       // content: $('#content').val()
     };
@@ -27,8 +27,7 @@ var main = {
       contentType: 'application/json; charset=utf-8',
       data: JSON.stringify(data)
     }).done(function () {
-      alert('글이 등록되었습니다.');
-      window.location.href = '/login';
+      alert('인증번호가 전송되었습니다.');
     }).fail(function (error) {
       alert(JSON.stringify(error));
     });

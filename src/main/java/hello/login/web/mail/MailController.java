@@ -29,15 +29,16 @@ public class MailController {
 	@ResponseBody
 	@PostMapping("/send")
 	public MailTo sendTestMail(@RequestBody MailSaveDto mailSaveDto) {
-		String email = mailSaveDto.getTitle();
-		log.info("email={}", email);
-		log.info("send Controller 실행");
-		String title = "제목 인증번호입니다.";
-		String message = "인증번호입니다.";
-		MailTo mailTo = new MailTo(email, title, message);
-		log.info("email ={}", email);
-		mailService.sendMail(mailTo);
-		return mailTo;
+//		String email = mailSaveDto.getTitle();
+//		log.info("email={}", email);
+//		log.info("send Controller 실행");
+//		String title = "제목 인증번호입니다.";
+//		String message = "인증번호입니다.";
+//		MailTo mailTo = new MailTo(email, title, message);
+//		log.info("email ={}", email);
+//		mailService.sendMail(mailTo);
+//		return mailTo;
+		return null;
 	}
 
 	@ResponseBody
