@@ -1,25 +1,46 @@
 package hello.login.web.mail;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MailController {
 
 	private final MailService mailService;
 
-	@GetMapping("/send")
-	public MailTo sendTestMail(String email) {
+	@GetMapping(value = "/mail")
+	public String sendMail(@ModelAttribute("mail") MailDto mailDto) {
+		return "mail/mail";
+	}
+
+	@GetMapping("/posts/save")
+	public String postsSave() {
+		return "posts-save";
+	}
+
+	@ResponseBody
+	@PostMapping("/send")
+	public MailTo sendTestMail(@RequestBody MailSaveDto mailSaveDto) {
+		String email = mailSaveDto.getTitle();
+		log.info("email={}", email);
+		log.info("send Controller 실행");
 		String title = "제목 인증번호입니다.";
 		String message = "인증번호입니다.";
 		MailTo mailTo = new MailTo(email, title, message);
+		log.info("email ={}", email);
 		mailService.sendMail(mailTo);
-
 		return mailTo;
 	}
 
+	@ResponseBody
 	@GetMapping("/send/file")
 	public MailTo sendTestFileEmail(String email) throws Exception{
 		String title = "제목 인증번호입니다.";

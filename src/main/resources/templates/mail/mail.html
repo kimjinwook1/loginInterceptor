@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 560px;
+    }
+
+    .field-error {
+      border-color: #dc3545;
+      color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="py-5 text-center">
+    <h2>회원 가입</h2>
+  </div>
+  <h4 class="mb-3">회원 정보 입력</h4>
+  <form action="" th:action th:object="${mail}" method="post">
+    <div th:if="${#fields.hasGlobalErrors()}">
+      <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+         th:text="${err}">전체 오류 메시지</p>
+    </div>
+    <label for="emailText">이메일</label>
+    <input type="email" class="form-control" id="emailText" placeholder="이메일을 입력하세요">
+    <div>
+      <!--      <button type="button" class="w-30 btn btn-secondary btn-lg" id="btn-emailCheck">인증번호 받기</button>-->
+      <button type="button" class="btn btn-primary" id="btn-save">등록</button>
+    </div>
+    <div>
+      <label for="certificationNumber">인증번호</label>
+      <input type="text" id="certificationNumber" th:field="*{certificationNumber}" class="form-control"
+             th:errorclass="field-error">
+      <div class="field-error" th:errors="*{certificationNumber}"/>
+      <div>
+        <button class="w-30 btn btn-secondary btn-lg" id="certificationBtn" onclick="emailCertification()">인증하기</button>
+        <input type="hidden" id="certificationYN" th:value="false">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <form>
+        <div class="form-group">
+          <label for="title">제목</label>
+          <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+        </div>
+        <div class="form-group">
+          <label for="author"> 작성자 </label>
+          <input type="text" class="form-control" id="author" placeholder="작성자를 입력하세요">
+        </div>
+        <div class="form-group">
+          <label for="content"> 내용 </label>
+          <textarea class="form-control" id="content" placeholder="내용을 입력하세요"></textarea>
+        </div>
+      </form>
+      <a href="/" role="button" class="btn btn-secondary">취소</a>
+      <button type="button" class="btn btn-primary" id="btn-save">등록</button>
+    </div>
+  </form>
+</div> <!-- /container -->
+<script>
+
+  var main = {
+    init: function () {
+      var _this = this;
+      $('#btn-save').on('click', function () {
+        _this.save();
+      });
+
+      $('#btn-update').on('click', function () {
+        _this.update();
+      });
+
+      $('#btn-delete').on('click', function () {
+        _this.delete();
+      });
+    },
+    save: function () {
+      var data = {
+        title: $('#title').val(),
+        author: $('#author').val(),
+        content: $('#content').val()
+      };
+
+      $.ajax({
+        type: 'POST',
+        url: '/api/v1/posts',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data)
+      }).done(function () {
+        alert('글이 등록되었습니다.');
+        window.location.href = '/';
+      }).fail(function (error) {
+        alert(JSON.stringify(error));
+      });
+    }
+  }
+  main.init();
+
+  // function emailSend(){
+  //   let clientEmail = document.getElementById("emailText").value;
+  //   let emailYn = isEmail(clientEmail);
+  //
+  //   console.log('입력 이메일' + clientEmail);
+  //
+  //   if (emailYn == true) {
+  // var main = {
+  //   init: function () {
+  //     var _this = this;
+  //     $('#btn-save').on('click', function () {
+  //       _this.save();
+  //     });
+  //   },
+  //   save: function () {
+  //     var data = {
+  //       emailText: $('#emailText').val(),
+  //     };
+  //     $.ajax({
+  //       type: 'POST',
+  //       url: '/send',
+  //       dataType: 'json',
+  //       contentType: 'application/json; charset=utf-8',
+  //       data: JSON.stringify(data)
+  //     }).done(function () {
+  //       alert('글이 등록되었습니다.');
+  //       window.location.href = '/';
+  //     }).fail(function (error) {
+  //       alert(JSON.stringify(error));
+  //     });
+  //   }
+  // }
+  // main.init();
+  // }
+  // else {
+  //   alert('이메일 형식에 알맞게 입력해주세요 xxx@xxx.com');
+  // }
+  // }
+  //
+  // function isEmail(asValue) {
+  //   var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  //   return regExp.test(asValue); //형식에 맞는 경우 true return
+  // }
+  //
+  // function emailCertification() {
+  //   let clientEmail = document.getElementById("emailText").value;
+  //   let inputCode = document.getElementById("certificationNumber").value;
+  //
+  //   console.log('이메일' + clientEmail);
+  //   console.log('인증코드' + inputCode);
+  //
+  //   $.ajax({
+  //     type: "GET",
+  //     url: "/api/member/email/certification",
+  //     data: {userEmail: clientEmail, inputCode: inputCode},
+  //     success: function (result) {
+  //       console.log(result);
+  //       if (result == true) {
+  //         alert('인증완료');
+  //         document.getElementById('certificationYN').value = "true";
+  //         clientEmail.onchange = function () {
+  //           document.getElementById('certificationYN'.value = "false");
+  //         };
+  //       } else {
+  //         alert("다시 시도해주세요.");
+  //       }
+  //     }
+  //   });
+  // }
+</script>
+</body>
+</html>

@@ -32,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer { //interceptor를 등록하�
 		registry.addInterceptor(new LoginCheckInterceptor())
 			.order(2)
 			.addPathPatterns("/**")
-			.excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error", "/send/**");
+			.excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error", "/send/**", "/mail/**", "/posts/**");
 	}
 
 	//    @Bean

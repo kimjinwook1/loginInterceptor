@@ -30,7 +30,7 @@ public class MailService {
 		String htmlContent = "<p>" + mail.getMessage() + "<p><img src ='cid:google-logo'>";
 		mailHandler.setText(htmlContent, true);
 		mailHandler.setAttach("test.txt", "static/test.txt");
-		mailHandler.setInline("google-logo", "static/google-logo.png");
+		mailHandler.setInline("goole-logo", "static/google-logo.png");
 		mailHandler.send();
 	}
 

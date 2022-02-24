@@ -49,7 +49,7 @@
             <input type="email" id="emailText" th:field="*{email}" class="form-control" th:errorclass="field-error">
             <div class="field-error" th:errors="*{email}" />
             <div>
-            <button class="w-30 btn btn-secondary btn-lg" id="emailCheck" onclick="emailSend()">인증번호 받기</button> </div>
+                <button class="w-30 btn btn-secondary btn-lg" id="emailCheck" onclick="emailSend()">인증번호 받기</button> </div>
         </div>
         <div>
             <label for="certificationNumber">인증번호</label>
@@ -78,6 +78,7 @@
 </div> <!-- /container -->
 </body>
 <script>
+
 function emailSend(){
     let clientEmail = document.getElementById("emailText").value;
     let emailYn = isEmail(clientEmail);
@@ -89,8 +90,8 @@ function emailSend(){
 
         $.ajax({
             type: "POST",
-            url: "/api/member/email",
-            data: {userEmail: clientEmail},
+            url: "/mail",
+            data: {email:clientEmail},
             success: function (data) {
             }, error: function (e) {
                 alert('오류입니다. 잠시 후 다시 시도해주세요.')
