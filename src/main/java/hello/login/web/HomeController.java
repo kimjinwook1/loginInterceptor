@@ -1,7 +1,7 @@
 package hello.login.web;
 
 import hello.login.domain.member.Member;
-import hello.login.domain.member.MemberRepository;
+import hello.login.domain.member.MemberRepository2;
 import hello.login.web.argumentresolver.Login;
 import hello.login.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final MemberRepository memberRepository;
+    private final MemberRepository2 memberRepository2;
     private final SessionManager sessionManager;
 
     //    @GetMapping("/")
@@ -36,7 +36,7 @@ public class HomeController {
         }
 
         //로그인
-        Member loginMember = memberRepository.findById(memberId);
+        Member loginMember = memberRepository2.findById(memberId);
         if (loginMember == null) {
             return "home";
         }

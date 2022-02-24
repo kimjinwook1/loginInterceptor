@@ -1,17 +1,15 @@
 package hello.login.domain.login;
 
 import hello.login.domain.member.Member;
-import hello.login.domain.member.MemberRepository;
+import hello.login.domain.member.MemberRepository2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final MemberRepository memberRepository;
+    private final MemberRepository2 memberRepository2;
 
     /**
      *
@@ -19,7 +17,7 @@ public class LoginService {
      */
     public Member login(String loginId, String password) {
 
-         return memberRepository.findByLoginId(loginId)
+         return memberRepository2.findByLoginId(loginId)
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);
 
