@@ -1,5 +1,6 @@
 package hello.login.web.mail;
 
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,7 +19,6 @@ public class MailService {
 		message.setSubject(mail.getTitle());
 		message.setText(mail.getMessage());
 
-
 		mailSender.send(message);
 	}
 
@@ -32,6 +32,16 @@ public class MailService {
 		mailHandler.setAttach("test.txt", "static/test.txt");
 		mailHandler.setInline("goole-logo", "static/google-logo.png");
 		mailHandler.send();
+	}
+
+	public String getRandomNumber() {
+		Random random = new Random();
+		StringBuilder aa = new StringBuilder();
+		for (int i = 0; i < 6; i++) {
+			int number = random.nextInt(9) + 1;
+			aa.append(number);
+		}
+		return aa.toString();
 	}
 
 }

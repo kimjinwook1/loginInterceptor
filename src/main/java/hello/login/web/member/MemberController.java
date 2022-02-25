@@ -3,6 +3,7 @@ package hello.login.web.member;
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository2;
 import hello.login.web.mail.MailSaveDto;
+import hello.login.web.mail.MailService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,16 +24,19 @@ public class MemberController {
 
 	@GetMapping("/add")
 	public String addForm(@ModelAttribute("member") Member member, @ModelAttribute("mailSaveDto")MailSaveDto mailSaveDto) {
+		log.info("MemberController에 getmapping save메서드");
 		return "members/addMemberForm";
 	}
 
+
 	@PostMapping("/add")
 	public String save(@Valid @ModelAttribute Member member, BindingResult bindingResult) {
+		log.info("MemberController에 postmapping save메서드");
 		if (bindingResult.hasErrors()) {
 			return "members/addMemberForm";
 		}
 		memberRepository2.save(member);
-		return "redirect:/";
+		return "redirect:/login";
 	}
 //
 //	private final JavaMailSender javaMailSender;

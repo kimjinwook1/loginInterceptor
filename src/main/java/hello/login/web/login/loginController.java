@@ -29,6 +29,7 @@ public class loginController {
 
 	@GetMapping("/login")
 	public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
+		log.info("loginController getmapping loginForm메서드");
 		return "/login/loginForm";
 	}
 
@@ -103,6 +104,7 @@ public class loginController {
 	public String loginV4(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
 		@RequestParam(defaultValue = "/") String redirectURL,
 		HttpServletRequest request) {
+		log.info("loginController PostMapping loginV4메서드");
 		if (bindingResult.hasErrors()) {
 			return "login/loginForm";
 		}
