@@ -1,136 +1,157 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .container {
-            max-width: 560px;
-        }
-        .field-error {
-            border-color: #dc3545;
-            color: #dc3545;
-        }
-    </style>
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 560px;
+    }
+
+    .field-error {
+      border-color: #dc3545;
+      color: #dc3545;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
-    <div class="py-5 text-center">
-        <h2>회원 가입</h2>
+  <div class="py-5 text-center">
+    <h2>회원 가입</h2>
+  </div>
+  <h4 class="mb-3">회원 정보 입력</h4>
+  <form action="" th:action th:object="${member}" method="post">
+    <div th:if="${#fields.hasGlobalErrors()}">
+      <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+         th:text="${err}">전체 오류 메시지</p>
     </div>
-    <h4 class="mb-3">회원 정보 입력</h4>
-    <form action="" th:action th:object="${member}" method="post">
-        <div th:if="${#fields.hasGlobalErrors()}">
-            <p class="field-error" th:each="err : ${#fields.globalErrors()}"
-               th:text="${err}">전체 오류 메시지</p>
-        </div>
-        <div>
-            <label for="loginId">로그인 ID</label>
-            <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
-                   th:errorclass="field-error">
-            <div class="field-error" th:errors="*{loginId}" />
-        </div>
-        <div>
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" th:field="*{password}"
-                   class="form-control"
-                   th:errorclass="field-error">
-            <div class="field-error" th:errors="*{password}" />
-        </div>
-        <div>
-            <label for="name">이름</label>
-            <input type="text" id="name" th:field="*{name}" class="form-control"
-                   th:errorclass="field-error">
-            <div class="field-error" th:errors="*{name}" />
-        </div>
-        <div>
-            <label for="emailText">이메일</label>
-            <input type="email" id="emailText" th:field="*{email}" class="form-control" th:errorclass="field-error">
-            <div class="field-error" th:errors="*{email}" />
-            <div>
-                <button class="w-30 btn btn-secondary btn-lg" id="emailCheck" onclick="emailSend()">인증번호 받기</button> </div>
-        </div>
-        <div>
-            <label for="certificationNumber">인증번호</label>
-            <input type="text" id="certificationNumber" th:field="*{certificationNumber}" class="form-control"
-                   th:errorclass="field-error">
-            <div class="field-error" th:errors="*{certificationNumber}" />
-            <div>
-                <button class="w-30 btn btn-secondary btn-lg" id="certificationBtn" onclick="emailCertification()">인증하기</button>
-                <input type="hidden" id="certificationYN" th:value="false">
-            </div>
-        </div>
-
-        <hr class="my-4">
-        <div class="row">
-            <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>
-            </div>
-            <div class="col">
-                <button class="w-100 btn btn-secondary btn-lg"
-                        onclick="location.href='items.html'"
-                        th:onclick="|location.href='@{/}'|"
-                        type="button">취소</button>
-            </div>
-        </div>
+    <div>
+      <label for="loginId">로그인 ID</label>
+      <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
+             th:errorclass="field-error">
+      <div class="field-error" th:errors="*{loginId}"/>
+    </div>
+    <div>
+      <label for="password">비밀번호</label>
+      <input type="password" id="password" th:field="*{password}"
+             class="form-control"
+             th:errorclass="field-error">
+      <div class="field-error" th:errors="*{password}"/>
+    </div>
+    <div>
+      <label for="name">이름</label>
+      <input type="text" id="name" th:field="*{name}" class="form-control"
+             th:errorclass="field-error">
+      <div class="field-error" th:errors="*{name}"/>
+    </div>
+  </form>
+    <form th:object="${mailSaveDto}">
+      <div class="form-group">
+        <label for="emailText">이메일</label>
+        <input type="email" class="form-control" id="emailText" placeholder="이메일을 입력하세요" th:field="*{emailText}">
+        <button type="button" class="btn btn-primary" id="btn-save">인증번호 발송</button>
+      </div>
+      <div class="form-group">
+        <label for="author"> 인증번호 </label>
+        <input type="text" class="form-control" id="author" placeholder="인증번호를 입력하세요">
+        <button type="button" class="btn btn-primary" id="btn-certificate" th:field="*{emailText}">확인하기</button>
+      </div>
     </form>
+  <form>
+    <hr class="my-4">
+    <div class="row">
+      <div class="col">
+        <button class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>
+      </div>
+      <div class="col">
+        <button class="w-100 btn btn-secondary btn-lg"
+                onclick="location.href='items.html'"
+                th:onclick="|location.href='@{/}'|"
+                type="button">취소
+        </button>
+      </div>
+    </div>
+  </form>
 </div> <!-- /container -->
-</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
+  var main = {
+    init: function () {
+      var _this = this;
+      $('#btn-save').on('click', function () {
+        _this.save();
+      });
 
-function emailSend(){
-    let clientEmail = document.getElementById("emailText").value;
-    let emailYn = isEmail(clientEmail);
+      $('#btn-update').on('click', function () {
+        _this.update();
+      });
 
-    console.log('입력 이메일' + clientEmail);
+      $('#btn-delete').on('click', function () {
+        _this.delete();
+      });
+    },
+    save: function () {
+      var data = {
+        emailText: $('#emailText').val(),
+        // author: $('#author').val(),
+        // content: $('#content').val()
+      };
 
-    if (emailYn == true) {
-        alert('인증번호가 발송되었습니다.');
+      $.ajax({
+        type: 'POST',
+        url: '/api/v1/posts',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data)
+      }).done(function () {
+        alert('인증번호가 전송되었습니다.');
+      }).fail(function (error) {
+        alert(JSON.stringify(error));
+      });
+    },
+    update: function () {
+      var data = {
+        title: $('#title').val(),
+        content: $('#content').val()
+      };
 
-        $.ajax({
-            type: "POST",
-            url: "/mail",
-            data: {email:clientEmail},
-            success: function (data) {
-            }, error: function (e) {
-                alert('오류입니다. 잠시 후 다시 시도해주세요.')
-            }
-        });
-    }else {
-        alert('이메일 형식에 알맞게 입력해주세요 xxx@xxx.com');
+      var id = $('#id').val();
+
+      $.ajax({
+        type: 'PUT',
+        url: '/api/v1/posts/' + id,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data)
+      }).done(function () {
+        alert('글이 수정되었습니다.');
+        window.location.href = '/';
+      }).fail(function (error) {
+        alert(JSON.stringify(error));
+      });
+    },
+    delete: function () {
+      var id = $('#id').val();
+
+      $.ajax({
+        type: 'DELETE',
+        url: '/api/v1/posts/' + id,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8'
+      }).done(function () {
+        alert('글이 삭제되었습니다.');
+        window.location.href = '/';
+      }).fail(function (error) {
+        alert(JSON.stringify(error));
+      });
     }
-}
 
-function isEmail(asValue) {
-    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    return regExp.test(asValue); //형식에 맞는 경우 true return
-}
+  };
 
-function emailCertification() {
-    let clientEmail = document.getElementById("emailText").value;
-    let inputCode= document.getElementById("certificationNumber").value;
-
-    console.log('이메일' + clientEmail);
-    console.log('인증코드' + inputCode);
-
-    $.ajax({
-        type: "POST",
-        url: "/api/member/email/certification",
-        data:{userEmail: clientEmail, inputCode: inputCode},
-        success: function (result) {
-            console.log(result);
-            if (result == true) {
-                alert('인증완료');
-                document.getElementById('certificationYN').value = "true";
-                clientEmail.onchange = function () {
-                    document.getElementById('certificationYN'.value = "false");
-                };
-            } else {
-                alert("다시 시도해주세요.");
-            }
-        }
-    });
-}
+  main.init();
 </script>
+</body>
 </html>
+

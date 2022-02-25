@@ -2,21 +2,16 @@ package hello.login.web.member;
 
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository2;
-import hello.login.web.mail.MailHandler;
-import java.util.Random;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import hello.login.web.mail.MailSaveDto;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,7 +22,7 @@ public class MemberController {
 	private final MemberRepository2 memberRepository2;
 
 	@GetMapping("/add")
-	public String addForm(@ModelAttribute("member") Member member) {
+	public String addForm(@ModelAttribute("member") Member member, @ModelAttribute("mailSaveDto")MailSaveDto mailSaveDto) {
 		return "members/addMemberForm";
 	}
 

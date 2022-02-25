@@ -20,14 +20,14 @@ public class MailApiController {
 		String email = mailSaveDto.getEmailText();
 		String title = "제목 인증번호입니다.";
 		String number = checkNumber();
-
 		String message = "인증번호 : " + number;
-
 		MailTo mailTo = new MailTo(email, title, message);
-		log.info("email ={}", email);
 		mailService.sendMail(mailTo);
+		mailSaveDto.setCertificationNumber(Integer.valueOf(number));
 		long end = System.currentTimeMillis();
-		System.out.println("end-start = " + (end - start));
+		log.info("email ={}", email);
+		log.info("mailSaveDto={}", mailSaveDto);
+		log.info("loadTime={}", (end - start));
 		return 0L;
 	}
 
