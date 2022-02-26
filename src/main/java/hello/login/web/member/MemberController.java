@@ -31,6 +31,7 @@ public class MemberController {
 	@PostMapping("/add")
 	public String save(@Valid @ModelAttribute Member member, BindingResult bindingResult) {
 		log.info("MemberController에 postmapping save메서드");
+		log.info("Member={}",member);
 		if (bindingResult.hasErrors()) {
 			return "members/addMemberForm";
 		}
