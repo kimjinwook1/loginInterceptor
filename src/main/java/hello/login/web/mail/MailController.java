@@ -34,7 +34,7 @@ public class MailController {
 		String email = mailSaveDto.getEmailText();
 		log.info("email={}", email);
 		log.info("send Controller 실행");
-		String title = "제목 인증번호입니다.";
+		String title = "블로그 이메일 인증번호입니다.";
 		String message = "인증번호입니다.";
 		MailTo mailTo = new MailTo(email, title, message);
 		log.info("email ={}", email);
@@ -45,7 +45,7 @@ public class MailController {
 	@ResponseBody
 	@GetMapping("/send/file")
 	public MailTo sendTestFileEmail(String email) throws Exception{
-		String title = "제목 인증번호입니다.";
+		String title = "블로그 이메일 인증번호입니다.";
 		String message = "인증번호입니다.";
 		MailTo mailTo = new MailTo(email, title, message);
 		mailService.sendMailWithFiles(mailTo);

@@ -18,7 +18,7 @@ public class MailApiController {
 		log.info("MailApiController");
 		log.info("member={}",mailSaveDto);
 		String email = mailSaveDto.getEmailText();
-		String title = "제목 인증번호입니다.";
+		String title = "블로그 이메일 인증번호입니다.";
 		String number = mailService.getRandomNumber();
 		String message = "인증번호 : " + number;
 		MailTo mailTo = new MailTo(email, title, message);

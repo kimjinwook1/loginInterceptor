@@ -17,7 +17,6 @@ public class AsyncConfig extends AsyncConfigurerSupport {
 		executor.setQueueCapacity(500); // CorePool이 초과될때 Queue에 저장했다가 꺼내서 실행된다. (500개까지 저장함)
 		// 단, MaxPoolSize가 초과되면 Thread 생성에 실패할 수 있음.
 		// 참고: https://medium.com/trendyol-tech/spring-boot-async-executor-management-with-threadpooltaskexecutor-f493903617d
-		// jooncco님 수정사항
 		executor.setThreadNamePrefix("async-"); // Spring에서 생성하는 Thread 이름의 접두사
 		executor.initialize();
 		return executor;
