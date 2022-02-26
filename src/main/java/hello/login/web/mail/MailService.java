@@ -2,23 +2,26 @@ package hello.login.web.mail;
 
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-@Service
+@Slf4j
 @RequiredArgsConstructor
+@Service
 public class MailService {
 
 	private final JavaMailSender mailSender;
 
+	@Async
 	public void sendMail(MailTo mail) {
+		log.info("MailService.sendMail");
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(mail.getAddress());
-		//message.setFrom(""); -> from 값을 설정하지 않으면 application.properties에 username 값이 설정된다.
 		message.setSubject(mail.getTitle());
 		message.setText(mail.getMessage());
-
 		mailSender.send(message);
 	}
 

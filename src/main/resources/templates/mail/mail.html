@@ -42,53 +42,32 @@
         <input type="hidden" id="certificationYN" th:value="false">
       </div>
     </div>
-    <div class="col-md-4">
-      <form>
-        <div class="form-group">
-          <label for="title">제목</label>
-          <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
-        </div>
-        <div class="form-group">
-          <label for="author"> 작성자 </label>
-          <input type="text" class="form-control" id="author" placeholder="작성자를 입력하세요">
-        </div>
-        <div class="form-group">
-          <label for="content"> 내용 </label>
-          <textarea class="form-control" id="content" placeholder="내용을 입력하세요"></textarea>
-        </div>
-      </form>
-      <a href="/" role="button" class="btn btn-secondary">취소</a>
-      <button type="button" class="btn btn-primary" id="btn-save">등록</button>
-    </div>
   </form>
 </div> <!-- /container -->
+</body>
 <script>
 
+  // function emailSend(){
+  //   let clientEmail = document.getElementById("emailText").value;
+  //   let emailYn = isEmail(clientEmail);
+  //
+  //   console.log('입력 이메일' + clientEmail);
+  //
+  //   if (emailYn == true) {
   var main = {
     init: function () {
       var _this = this;
       $('#btn-save').on('click', function () {
         _this.save();
       });
-
-      $('#btn-update').on('click', function () {
-        _this.update();
-      });
-
-      $('#btn-delete').on('click', function () {
-        _this.delete();
-      });
     },
     save: function () {
       var data = {
-        title: $('#title').val(),
-        author: $('#author').val(),
-        content: $('#content').val()
+        emailText: $('#emailText').val(),
       };
-
       $.ajax({
         type: 'POST',
-        url: '/api/v1/posts',
+        url: '/send',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data)
@@ -101,40 +80,6 @@
     }
   }
   main.init();
-
-  // function emailSend(){
-  //   let clientEmail = document.getElementById("emailText").value;
-  //   let emailYn = isEmail(clientEmail);
-  //
-  //   console.log('입력 이메일' + clientEmail);
-  //
-  //   if (emailYn == true) {
-  // var main = {
-  //   init: function () {
-  //     var _this = this;
-  //     $('#btn-save').on('click', function () {
-  //       _this.save();
-  //     });
-  //   },
-  //   save: function () {
-  //     var data = {
-  //       emailText: $('#emailText').val(),
-  //     };
-  //     $.ajax({
-  //       type: 'POST',
-  //       url: '/send',
-  //       dataType: 'json',
-  //       contentType: 'application/json; charset=utf-8',
-  //       data: JSON.stringify(data)
-  //     }).done(function () {
-  //       alert('글이 등록되었습니다.');
-  //       window.location.href = '/';
-  //     }).fail(function (error) {
-  //       alert(JSON.stringify(error));
-  //     });
-  //   }
-  // }
-  // main.init();
   // }
   // else {
   //   alert('이메일 형식에 알맞게 입력해주세요 xxx@xxx.com');
@@ -172,5 +117,4 @@
   //   });
   // }
 </script>
-</body>
 </html>

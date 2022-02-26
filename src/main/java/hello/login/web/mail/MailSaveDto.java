@@ -1,5 +1,7 @@
 package hello.login.web.mail;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,6 +10,7 @@ import lombok.ToString;
 @ToString
 @Setter
 public class MailSaveDto {
+	@NotNull
+	@Email
 	private String emailText;
-	private Integer certificationNumber;
 }

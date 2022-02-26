@@ -90,19 +90,17 @@
     },
     save: function () {
       var data = {
-        emailText: $('#emailText').val(),
+        emailText: $('#emailText').val()
       };
-
       $.ajax({
         type: 'POST',
         url: '/api/v1/posts',
-        dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data)
       }).done(function () {
         alert('인증번호가 전송되었습니다.');
-      }).fail(function (error) {
-        alert('인증번호가 전송되었습니다.');
+      }).fail(function () {
+        alert('잘못된 이메일형식 입니다.');
       });
     },
     update: function () {
@@ -143,6 +141,11 @@
     }
 
   };
+
+  function isEmail(data) {
+    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    return regExp.text(data);
+  }
 
   main.init();
 </script>

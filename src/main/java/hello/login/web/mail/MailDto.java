@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class MailDto {
 
-	private String email;
+	private String emailText;
 	private Integer certificationNumber;
 
 }
