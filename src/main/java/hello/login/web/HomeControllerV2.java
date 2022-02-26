@@ -1,24 +1,25 @@
 package hello.login.web;
 
 import hello.login.domain.member.Member;
-import hello.login.domain.member.MemberRepository;
+import hello.login.domain.member.MemberJpaRepository;
 import hello.login.web.argumentresolver.Login;
 import hello.login.web.session.SessionManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Slf4j
-//@Controller
+@Controller
 @RequiredArgsConstructor
-public class HomeController {
+public class HomeControllerV2 {
 
-    private final MemberRepository memberRepository;
+    private final MemberJpaRepository memberJpaRepository;
     private final SessionManager sessionManager;
 
     //    @GetMapping("/")
@@ -34,7 +35,7 @@ public class HomeController {
         }
 
         //로그인
-        Member loginMember = memberRepository.findById(memberId);
+        Member loginMember = memberJpaRepository.findById(memberId).get();
         if (loginMember == null) {
             return "home";
         }

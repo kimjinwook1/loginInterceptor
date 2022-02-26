@@ -1,6 +1,7 @@
+
 package hello.login.web.login;
 
-import hello.login.domain.login.LoginServiceV2;
+import hello.login.domain.login.LoginService;
 import hello.login.domain.member.Member;
 import hello.login.web.SessionConst;
 import hello.login.web.session.SessionManager;
@@ -19,11 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
-@Controller
+//@Controller
 @RequiredArgsConstructor
-public class loginController {
+public class loginControllerV2 {
 
-	private final LoginServiceV2 loginServiceV2;
+	private final LoginService loginService;
 	private final SessionManager sessionManager;
 
 
@@ -40,7 +41,7 @@ public class loginController {
 			return "login/loginForm";
 		}
 
-		Member loginMember = loginServiceV2.login(form.getLoginId(), form.getPassword());
+		Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
 
 		if (loginMember == null) {
 			bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -62,7 +63,7 @@ public class loginController {
 			return "login/loginForm";
 		}
 
-		Member loginMember = loginServiceV2.login(form.getLoginId(), form.getPassword());
+		Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
 
 		if (loginMember == null) {
 			bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -84,7 +85,7 @@ public class loginController {
 			return "login/loginForm";
 		}
 
-		Member loginMember = loginServiceV2.login(form.getLoginId(), form.getPassword());
+		Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
 
 		if (loginMember == null) {
 			bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -109,7 +110,7 @@ public class loginController {
 			return "login/loginForm";
 		}
 
-		Member loginMember = loginServiceV2.login(form.getLoginId(), form.getPassword());
+		Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
 
 		if (loginMember == null) {
 			bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
