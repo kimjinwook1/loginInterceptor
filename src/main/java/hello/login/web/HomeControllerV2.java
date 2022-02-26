@@ -1,7 +1,7 @@
 package hello.login.web;
 
 import hello.login.domain.member.Member;
-import hello.login.domain.member.MemberJpaRepository;
+import hello.login.domain.member.MemberService;
 import hello.login.web.argumentresolver.Login;
 import hello.login.web.session.SessionManager;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @RequiredArgsConstructor
 public class HomeControllerV2 {
 
-    private final MemberJpaRepository memberJpaRepository;
+    private final MemberService memberService;
     private final SessionManager sessionManager;
 
     //    @GetMapping("/")
@@ -35,7 +35,7 @@ public class HomeControllerV2 {
         }
 
         //로그인
-        Member loginMember = memberJpaRepository.findById(memberId).get();
+        Member loginMember = memberService.findById(memberId);
         if (loginMember == null) {
             return "home";
         }

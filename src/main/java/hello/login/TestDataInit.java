@@ -1,35 +1,36 @@
 package hello.login;
 
 import hello.login.domain.item.Item;
-import hello.login.domain.item.ItemRepository;
+import hello.login.domain.item.ItemJpaRepository;
 import hello.login.domain.member.Member;
-import hello.login.domain.member.MemberRepository;
+import hello.login.domain.member.MemberJpaRepository;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 @RequiredArgsConstructor
 public class TestDataInit {
 
-    private final ItemRepository itemRepository;
-    private final MemberRepository memberRepository;
+    private final ItemJpaRepository itemJpaRepository;
+    private final MemberJpaRepository memberJpaRepository;
 
     /**
      * 테스트용 데이터 추가
      */
     @PostConstruct
     public void init() {
-        itemRepository.save(new Item("itemA", 10000, 10));
-        itemRepository.save(new Item("itemB", 20000, 20));
+        itemJpaRepository.save(new Item("itemA", 10000, 10));
+        itemJpaRepository.save(new Item("itemB", 20000, 20));
 
         Member member = new Member();
         member.setLoginId("test");
         member.setPassword("test!");
         member.setName("테스터");
 
-        memberRepository.save(member);
+        memberJpaRepository.save(member);
     }
 
 }

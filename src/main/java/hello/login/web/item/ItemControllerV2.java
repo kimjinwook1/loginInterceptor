@@ -1,7 +1,7 @@
 package hello.login.web.item;
 
 import hello.login.domain.item.Item;
-import hello.login.domain.item.ItemJpaRepository;
+import hello.login.domain.item.ItemService;
 import hello.login.web.item.form.ItemSaveForm;
 import hello.login.web.item.form.ItemUpdateForm;
 import java.util.List;
@@ -24,18 +24,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class ItemControllerV2 {
 
-	private final ItemJpaRepository itemJpaRepository;
+	private final ItemService itemService;
 
 	@GetMapping
 	public String itemsV2(Model model) {
-		List<Item> items = itemJpaRepository.findAll();
+		List<Item> items = itemService.findAll();
 		model.addAttribute("items", items);
 		return "items/items";
 	}
 
 	@GetMapping("/{itemId}")
 	public String itemV2(@PathVariable long itemId, Model model) {
-		Item item = itemJpaRepository.findById(itemId).get();
+		Item item = itemService.findById(itemId);
 		model.addAttribute("item", item);
 		return "items/item";
 	}
@@ -64,7 +64,7 @@ public class ItemControllerV2 {
 
 		//성공 로직
 		Item item = new Item(form.getItemName(), form.getPrice(), form.getQuantity());
-		Item savedItem = itemJpaRepository.save(item);
+		Item savedItem = itemService.save(item);
 		redirectAttributes.addAttribute("itemId", savedItem.getId());
 		redirectAttributes.addAttribute("status", true);
 		return "redirect:/items/{itemId}";
@@ -72,7 +72,7 @@ public class ItemControllerV2 {
 
 	@GetMapping("/{itemId}/edit")
 	public String editFormV2(@PathVariable Long itemId, Model model) {
-		Item item = itemJpaRepository.findById(itemId).get();
+		Item item = itemService.findById(itemId);
 		model.addAttribute("item", item);
 		return "items/editForm";
 	}
@@ -93,11 +93,7 @@ public class ItemControllerV2 {
 			return "items/editForm";
 		}
 
-		Item item = itemJpaRepository.findById(itemId).get();
-
-		item.setItemName(form.getItemName());
-		item.setPrice(form.getPrice());
-		item.setQuantity(form.getQuantity());
+		itemService.updateItem(form.getId(), form.getItemName(), form.getPrice(), form.getQuantity());
 
 		return "redirect:/items/{itemId}";
 	}

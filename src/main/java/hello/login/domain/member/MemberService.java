@@ -4,13 +4,16 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class MemberService {
 
 	private final MemberJpaRepository memberJpaRepository;
 
+	@Transactional
 	public Member save(Member member) {
 		return memberJpaRepository.save(member);
 	}
@@ -20,7 +23,7 @@ public class MemberService {
 	}
 
 	public Optional<Member> findByLoginId(String loginId) {
-		return memberJpaRepository.findByLoginId(loginId).stream()
+		return memberJpaRepository.findAll().stream()
 			.filter(m -> m.getLoginId().equals(loginId))
 			.findFirst();
 	}
