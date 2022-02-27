@@ -13,4 +13,5 @@ public class MailSaveDto {
 	@NotBlank
 	@Email
 	private String emailText;
+	private String number;
 }

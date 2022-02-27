@@ -11,15 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class MailApiController {
+
 	private final MailService mailService;
 
 	@PostMapping("/api/v1/posts")
 	public void save(@Validated @RequestBody MailSaveDto mailSaveDto) {
 		log.info("MailApiController");
-		log.info("member={}",mailSaveDto);
+		log.info("member={}", mailSaveDto);
 		String email = mailSaveDto.getEmailText();
 		String title = "블로그 이메일 인증번호입니다.";
-		String number = mailService.getRandomNumber();
+		String number = mailSaveDto.getNumber();
+		log.info("number={}", number);
 		String message = "인증번호 : " + number;
 		MailTo mailTo = new MailTo(email, title, message);
 		long start = System.currentTimeMillis();
@@ -30,12 +32,13 @@ public class MailApiController {
 	}
 
 	@PostMapping("/api/v2/posts")
-	public Long check(@RequestBody MailSaveDto mailSaveDto) {
-//		Integer certificationNumber = mailSaveDto.getCertificationNumber();
-		String randomNumber = mailService.getRandomNumber();
-		log.info("checkNumber={}", randomNumber);
-		return 0L;
+	public void checkNumber(@Validated @RequestBody InputNumber inputNumber) {
+		log.info("checkNumber");
+		log.info("Member={}", inputNumber.getCertificationNumber());
+		Integer certificationNumber = Integer.valueOf(inputNumber.getNumber());
+		log.info("certificationNumber={}", certificationNumber);
+		if (!inputNumber.getCertificationNumber().equals(certificationNumber)) {
+			throw new IllegalStateException("인증번호가 일치하지 않습니다.");
+		}
 	}
-
-
 }

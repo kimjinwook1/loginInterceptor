@@ -48,12 +48,13 @@
     <div class="form-group">
       <label for="emailText">이메일</label>
       <input type="email" class="form-control" id="emailText" placeholder="이메일을 입력하세요" th:field="*{emailText}">
-      <button type="button" class="btn btn-primary" id="btn-save">인증번호 발송</button>
+      <button type="button" class="btn btn-primary" id="btn-sendMail">인증번호 발송</button>
     </div>
     <div class="form-group">
       <label for="certificationNumber"> 인증번호 </label>
       <input type="text" class="form-control" id="certificationNumber" placeholder="인증번호를 입력하세요" th:field="*{certificationNumber}">
       <button type="button" class="btn btn-primary" id="btn-certificate">확인하기</button>
+      <input type="hidden" id="number" th:value="${number}">
     </div>
     <hr class="my-4">
     <div class="row">
@@ -76,11 +77,11 @@
   var main = {
     init: function () {
       var _this = this;
-      $('#btn-save').on('click', function () {
+      $('#btn-sendMail').on('click', function () {
         _this.save();
       });
 
-      $('#btn-update').on('click', function () {
+      $('#btn-certificate').on('click', function () {
         _this.update();
       });
 
@@ -90,7 +91,8 @@
     },
     save: function () {
       var data = {
-        emailText: $('#emailText').val()
+        emailText: $('#emailText').val(),
+        number: $('#number').val()
       };
       $.ajax({
         type: 'POST',
@@ -106,19 +108,17 @@
     update: function () {
       var data = {
         certificationNumber: $('#certificationNumber').val(),
+        number: $('#number').val()
       };
-
       $.ajax({
-        type: 'PUT',
-        url: '/api/v2/posts/',
-        dataType: 'json',
+        type: 'POST',
+        url: '/api/v2/posts',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data)
       }).done(function () {
-        alert('글이 수정되었습니다.');
-        window.location.href = '/';
-      }).fail(function (error) {
-        alert(JSON.stringify(error));
+        alert('인증번호가 확인되었습니다.');
+      }).fail(function () {
+        alert('인증번호가 일치하지 않습니다.');
       });
     },
     delete: function () {
