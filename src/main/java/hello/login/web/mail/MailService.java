@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class MailService {
 
 	private final JavaMailSender mailSender;
+	private final MailRepository mailRepository;
 
 	@Async
 	public void sendMail(MailTo mail) {
@@ -25,7 +26,7 @@ public class MailService {
 		mailSender.send(message);
 	}
 
-	public void sendMailWithFiles(MailTo mail) throws Exception{
+	public void sendMailWithFiles(MailTo mail) throws Exception {
 		MailHandler mailHandler = new MailHandler(mailSender);
 		mailHandler.setTo(mail.getAddress());
 		mailHandler.setSubject(mail.getTitle());
@@ -47,4 +48,11 @@ public class MailService {
 		return aa.toString();
 	}
 
+	public void saveSendMailTime(long currentTimeMillis) {
+		mailRepository.saveTime(currentTimeMillis);
+	}
+
+	public long getSendMailTime() {
+		return mailRepository.getTime();
+	}
 }

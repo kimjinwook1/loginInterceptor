@@ -117,8 +117,8 @@
         data: JSON.stringify(data)
       }).done(function () {
         alert('인증번호가 확인되었습니다.');
-      }).fail(function () {
-        alert('인증번호가 일치하지 않습니다.');
+      }).fail(function (request) {
+        alert('인증번호가 일치하지 않거나 인증시간을 초과하였습니다.');
       });
     },
     delete: function () {

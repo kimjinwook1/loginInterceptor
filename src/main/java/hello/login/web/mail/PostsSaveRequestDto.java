@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+//안쓰는 데이터
 @Getter
 @NoArgsConstructor
 @ToString
