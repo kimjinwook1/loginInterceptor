@@ -27,14 +27,13 @@ public class loginControllerV2 {
 	private final LoginServiceV2 loginServiceV2;
 	private final SessionManager sessionManager;
 
-
-	@GetMapping("/login")
+	@GetMapping("/homeLogin")
 	public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
 		log.info("loginController getmapping loginForm메서드");
-		return "/login/loginForm";
+		return "login/loginForm";
 	}
 
-	@PostMapping("/login")
+	@PostMapping("/homeLogin")
 	public String loginV4(@Validated @ModelAttribute LoginForm form, BindingResult bindingResult,
 		@RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request) {
 		log.info("loginController PostMapping loginV4메서드");

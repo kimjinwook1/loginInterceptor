@@ -35,7 +35,7 @@ public class MemberController {
 			return "members/addMemberForm";
 		}
 		memberRepository.save(member);
-		return "redirect:/login";
+		return "redirect:/homeLogin";
 	}
 
 }

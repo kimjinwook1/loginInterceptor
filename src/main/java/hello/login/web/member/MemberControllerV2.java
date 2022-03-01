@@ -2,6 +2,7 @@ package hello.login.web.member;
 
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberJpaRepository;
+import hello.login.domain.member.Role;
 import hello.login.web.mail.MailSaveDto;
 import hello.login.web.mail.MailService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class MemberControllerV2 {
 	public String save(@Validated @ModelAttribute Member member, BindingResult bindingResult, Model model) {
 		log.info("MemberController에 postmapping save메서드");
 		log.info("Member={}", member);
+		member.setRole(Role.GUEST);
 		if (bindingResult.hasErrors()) {
 			return "members/addMemberForm";
 		}

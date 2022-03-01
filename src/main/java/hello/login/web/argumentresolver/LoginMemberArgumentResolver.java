@@ -36,6 +36,9 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 			System.out.println("세션이 널이다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ");
 			return null;
 		}
-		return session.getAttribute(SessionConst.SOCIAL_LOGIN_MEMBER);
+		if (session.getAttribute(SessionConst.SOCIAL_LOGIN_MEMBER) != null) {
+			return session.getAttribute(SessionConst.SOCIAL_LOGIN_MEMBER);
+		}
+		return session.getAttribute(SessionConst.LOGIN_MEMBER);
 	}
 }
