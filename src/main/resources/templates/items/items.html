@@ -11,7 +11,12 @@
     <div class="py-5 text-center">
         <h2 th:text="#{page.items}">상품 목록</h2>
     </div>
-
+    <form th:action="@{/logout}" method="post">
+        <button class="btn btn-primary float-start"
+                onclick="location.href='items.html'" type="submit">
+            로그아웃
+        </button>
+    </form>
     <div class="row">
         <div class="col">
             <button class="btn btn-primary float-end"
