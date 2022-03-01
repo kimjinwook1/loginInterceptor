@@ -25,14 +25,14 @@ public class ItemController {
 
 	private final ItemRepository itemRepository;
 
-	    @GetMapping
+	@GetMapping
 	public String items(Model model) {
 		List<Item> items = itemRepository.findAll();
 		model.addAttribute("items", items);
 		return "items/items";
 	}
 
-		@GetMapping("/{itemId}")
+	@GetMapping("/{itemId}")
 	public String item(@PathVariable long itemId, Model model) {
 		Item item = itemRepository.findById(itemId);
 		model.addAttribute("item", item);

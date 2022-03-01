@@ -33,8 +33,9 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 		HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 		HttpSession session = request.getSession(false); //false 준 이유는 의미 없는 세션이 만들어지는 것을 방지 하기 위해서
 		if (session == null) {
+			System.out.println("세션이 널이다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ");
 			return null;
 		}
-		return session.getAttribute(SessionConst.LOGIN_MEMBER);
+		return session.getAttribute(SessionConst.SOCIAL_LOGIN_MEMBER);
 	}
 }

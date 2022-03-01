@@ -22,5 +22,12 @@ public class LoginServiceV2 {
                 .orElse(null);
 
     }
+
+	public Member socialLogin(String emailText) {
+
+		return memberJpaRepository.findByEmailText(emailText)
+			.filter(m -> m.getEmailText().equals(emailText))
+			.orElse(null);
+	}
 }
 

@@ -4,6 +4,7 @@ import hello.login.domain.item.Item;
 import hello.login.domain.item.ItemJpaRepository;
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberJpaRepository;
+import hello.login.domain.member.Role;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,8 @@ public class TestDataInit {
         member.setLoginId("test");
         member.setPassword("test!");
         member.setName("테스터");
+        member.setEmailText("asdf@nate.com");
+        member.setRole(Role.GUEST);
 
         memberJpaRepository.save(member);
     }

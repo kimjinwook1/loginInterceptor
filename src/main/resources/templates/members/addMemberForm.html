@@ -102,7 +102,7 @@
       }).done(function () {
         alert('인증번호가 전송되었습니다.');
       }).fail(function () {
-        alert('잘못된 이메일형식 입니다.');
+        alert('이미 존재하는 이메일 또는 잘못된 이메일 형식입니다. 다시 입력해주세요.');
       });
     },
     update: function () {
@@ -123,7 +123,6 @@
     },
     delete: function () {
       var id = $('#id').val();
-
       $.ajax({
         type: 'DELETE',
         url: '/api/v1/posts/' + id,

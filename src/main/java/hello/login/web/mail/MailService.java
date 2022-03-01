@@ -55,4 +55,5 @@ public class MailService {
 	public long getSendMailTime() {
 		return mailRepository.getTime();
 	}
+
 }
