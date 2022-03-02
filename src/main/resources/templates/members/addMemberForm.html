@@ -96,7 +96,7 @@
       };
       $.ajax({
         type: 'POST',
-        url: '/api/v1/posts',
+        url: '/mail/send',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data)
       }).done(function () {
@@ -112,7 +112,7 @@
       };
       $.ajax({
         type: 'POST',
-        url: '/api/v2/posts',
+        url: '/mail/check',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data)
       }).done(function () {

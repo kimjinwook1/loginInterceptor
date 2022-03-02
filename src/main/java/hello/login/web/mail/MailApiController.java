@@ -16,8 +16,9 @@ public class MailApiController {
 	private final MailService mailService;
 	private final MemberService memberService;
 
-	@PostMapping("/api/v1/posts")
+	@PostMapping("/mail/send")
 	public void save(@Validated @RequestBody MailSaveDto mailSaveDto) throws Exception {
+		log.info("메일 발송");
 		memberService.findAll().stream()
 			.filter(member -> member.getEmailText().equals(mailSaveDto.getEmailText())).forEach(member -> {
 			throw new IllegalStateException("이미 존재하는 이메일입니다.");
@@ -27,8 +28,9 @@ public class MailApiController {
 		mailService.saveSendMailTime(System.currentTimeMillis());
 	}
 
-	@PostMapping("/api/v2/posts")
+	@PostMapping("/mail/check")
 	public void checkNumber(@Validated @RequestBody InputNumber inputNumber) {
+		log.info("인증번호 확인");
 		Integer certificationNumber = Integer.valueOf(inputNumber.getNumber());
 		long sendMailTime = mailService.getSendMailTime();
 		long limitTIme = 1000 * 1 * 60;//60초
@@ -45,7 +47,6 @@ public class MailApiController {
 		String title = "블로그 이메일 인증번호입니다.";
 		String number = mailSaveDto.getNumber();
 		String message = "인증번호 : " + number;
-		MailTo mailTo = new MailTo(email, title, message);
-		return mailTo;
+		return new MailTo(email, title, message);
 	}
 }

@@ -42,7 +42,7 @@ public class MemberControllerV2 {
 			return "members/addMemberForm";
 		}
 		memberJpaRepository.save(member);
-		return "redirect:/login";
+		return "redirect:/homeLogin";
 	}
 
 }

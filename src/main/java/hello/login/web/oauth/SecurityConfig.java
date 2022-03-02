@@ -1,5 +1,6 @@
 package hello.login.web.oauth;
 
+import hello.login.domain.member.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,15 +16,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		log.info("SecurityConfig");
 		http
 			.csrf().disable()
 			.headers().frameOptions().disable()
 			.and()
 			.authorizeRequests()
-			.antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/profile")
+			.antMatchers("/", "/homeLogin", "/members/add", "/css/**",
+				"/images/**", "/js/**", "/h2-console/**", "/profile", "/mail/**")
 			.permitAll()
-//			.antMatchers("/api/v1/**").hasRole(Role.GUEST.name())
-//			.anyRequest().authenticated()
+			.antMatchers("/items/**").hasRole(Role.GUEST.name())
+			.anyRequest().authenticated()
 			.and()
 			.logout()
 			.logoutSuccessUrl("/")

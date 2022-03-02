@@ -25,20 +25,46 @@ public class OAuthAttributes {
 		this.picture = picture;
 	}
 
-	public static OAuthAttributes of(
-		String registrationId,
-		String userNameAttributeName,
-		Map<String, Object> attributes) {
+	public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
 
-		if ("naver".equals(registrationId)) {
-			return ofNaver("id", attributes);
-		}
+//		if ("naver".equals(registrationId)) {
+//			return ofNaver("id", attributes);
+//		}
 		if ("github".equals(registrationId)) {
 			return ofGithub("id", attributes);
 		}
 		return ofGoogle(userNameAttributeName, attributes);
 	}
 
+	private static OAuthAttributes ofGithub(String userNameAttributeName, Map<String, Object> attributes) {
+		return OAuthAttributes.builder()
+			.name((String) attributes.get("name"))
+			.email((String) attributes.get("email"))
+			.picture((String) attributes.get("avatar_url"))
+			.attributes(attributes)
+			.nameAttributeKey(userNameAttributeName)
+			.build();
+	}
+
+	private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
+		return OAuthAttributes.builder()
+			.name((String) attributes.get("name"))
+			.email((String) attributes.get("email"))
+			.picture((String) attributes.get("picture"))
+			.attributes(attributes)
+			.nameAttributeKey(userNameAttributeName)
+			.build();
+	}
+	public Member toEntity() {
+		return Member.builder()
+			.name(name)
+			.email(email)
+			.picture(picture)
+			.role(Role.GUEST)
+			.build();
+	}
+
+	//	네이버
 	private static OAuthAttributes ofNaver(String userNameAttributeName,
 		Map<String, Object> attributes) {
 
@@ -50,37 +76,6 @@ public class OAuthAttributes {
 			.picture((String) response.get("profile_image"))
 			.attributes(response)
 			.nameAttributeKey(userNameAttributeName)
-			.build();
-	}
-
-	private static OAuthAttributes ofGoogle(String userNameAttributeName,
-		Map<String, Object> attributes) {
-		return OAuthAttributes.builder()
-			.name((String) attributes.get("name"))
-			.email((String) attributes.get("email"))
-			.picture((String) attributes.get("picture"))
-			.attributes(attributes)
-			.nameAttributeKey(userNameAttributeName)
-			.build();
-	}
-
-	private static OAuthAttributes ofGithub(String userNameAttributeName, Map<String, Object> attributes) {
-
-		return OAuthAttributes.builder()
-			.name((String) attributes.get("name"))
-			.email((String) attributes.get("email"))
-			.picture((String) attributes.get("avatar_url"))
-			.attributes(attributes)
-			.nameAttributeKey(userNameAttributeName)
-			.build();
-	}
-
-	public Member toEntity() {
-		return Member.builder()
-			.name(name)
-			.email(email)
-			.picture(picture)
-			.role(Role.GUEST)
 			.build();
 	}
 
