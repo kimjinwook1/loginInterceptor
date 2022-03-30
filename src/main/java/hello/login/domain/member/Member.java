@@ -21,7 +21,7 @@ public class Member {
     private Long id; //DB 에 보관되는 ID
 
 //    @NotEmpty
-    private String loginId; //로그인 ID
+    private String username; //로그인 ID
 //    @NotEmpty
     private String name; //사용자 이름
 //    @NotEmpty

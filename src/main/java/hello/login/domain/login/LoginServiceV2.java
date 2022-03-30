@@ -15,9 +15,9 @@ public class LoginServiceV2 {
      *
      * @return null 로그인 실패
      */
-    public Member login(String loginId, String password) {
+    public Member login(String username, String password) {
 
-         return memberJpaRepository.findByLoginId(loginId)
+         return memberJpaRepository.findByUsername(username)
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);
 

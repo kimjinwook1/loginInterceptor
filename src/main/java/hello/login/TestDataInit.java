@@ -27,11 +27,11 @@ public class TestDataInit {
         itemJpaRepository.save(new Item("itemB", 20000, 20));
 
         Member member = new Member();
-        member.setLoginId("test");
+        member.setUsername("test");
         member.setPassword("test!");
         member.setName("테스터");
         member.setEmailText("asdf@nate.com");
-        member.setRole(Role.GUEST);
+        member.setRole(Role.ROLE_GUEST);
 
         memberJpaRepository.save(member);
     }

@@ -37,7 +37,7 @@ public class MemberControllerV2 {
 	public String save(@Validated @ModelAttribute Member member, BindingResult bindingResult, Model model) {
 		log.info("MemberController에 postmapping save메서드");
 		log.info("Member={}", member);
-		member.setRole(Role.GUEST);
+		member.setRole(Role.ROLE_GUEST);
 		if (bindingResult.hasErrors()) {
 			return "members/addMemberForm";
 		}

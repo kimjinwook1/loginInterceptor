@@ -4,12 +4,11 @@ import hello.login.web.argumentresolver.LoginMemberArgumentResolver;
 import hello.login.web.interceptor.LogInterceptor;
 import hello.login.web.interceptor.LoginCheckInterceptor;
 import java.util.List;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+//@Configuration
 public class WebConfig implements WebMvcConfigurer { //interceptor를 등록하려면 WebMvcConfigurer의 addIntercptors 메서드에 구현해야한다.
 
 	@Override

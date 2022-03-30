@@ -24,7 +24,7 @@ public class MemberService {
 
 	public Optional<Member> findByLoginId(String loginId) {
 		return memberJpaRepository.findAll().stream()
-			.filter(m -> m.getLoginId().equals(loginId))
+			.filter(m -> m.getUsername().equals(loginId))
 			.findFirst();
 	}
 
