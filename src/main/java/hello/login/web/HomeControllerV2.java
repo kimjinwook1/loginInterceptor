@@ -1,9 +1,11 @@
 package hello.login.web;
 
 import hello.login.domain.member.Member;
-import hello.login.web.argumentresolver.Login;
+import hello.login.web.security.service.MemberContext;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,16 +15,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class HomeControllerV2 {
 
-    @GetMapping("/")
-    public String homeLoginV3ArgumentResolver(@Login Member loginMember, Model model) {
+	@GetMapping("/")
+	public String homeLoginV3ArgumentResolver(HttpSession session, Model model,
+		@AuthenticationPrincipal MemberContext memberContext) {
 
-        System.out.println("loginMember = " + loginMember);
-        // 세션에 회원 데이터가 없으면 home
-        if (loginMember == null) {
-            return "home";
-        }
-        //세션이 유지되면 로그인으로 이동
-        model.addAttribute("member", loginMember);
-        return "loginHome";
-    }
+		Member loginSocial = (Member) session.getAttribute(SessionConst.SOCIAL_LOGIN_MEMBER);
+
+		if (memberContext == null && loginSocial == null) {
+			return "home";
+		}
+		if (memberContext == null) {
+			model.addAttribute("member", loginSocial);
+			return "loginHome";
+		}
+		if (loginSocial == null) {
+			model.addAttribute("member", memberContext);
+			return "loginHome";
+		}
+		return "home";
+	}
 }

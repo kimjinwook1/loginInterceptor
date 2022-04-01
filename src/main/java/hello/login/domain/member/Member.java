@@ -37,13 +37,14 @@ public class Member {
     @Column(nullable = false)
     private Role role;
 
-    @Builder
-    public Member(String name, String email, String picture, Role role) {
-        this.name = name;
-        this.emailText = email;
-        this.picture = picture;
-        this.role = role;
-    }
+	@Builder
+	public Member(String username, String name, String email, String picture, Role role) {
+		this.username = username;
+		this.name = name;
+		this.emailText = email;
+		this.picture = picture;
+		this.role = role;
+	}
 
     public Member update(String name, String picture) {
         this.name = name;
