@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -27,13 +28,13 @@ public class loginControllerV2 {
 	private final LoginServiceV2 loginServiceV2;
 	private final SessionManager sessionManager;
 
-	@GetMapping("/homeLogin")
+	@GetMapping("/login")
 	public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
 		log.info("loginController getmapping loginForm메서드");
 		return "login/loginForm";
 	}
 
-	@PostMapping("/homeLogin")
+	@PostMapping("/login")
 	public String loginV4(@Validated @ModelAttribute LoginForm form, BindingResult bindingResult,
 		@RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request) {
 		log.info("loginController PostMapping loginV4메서드");
@@ -42,7 +43,6 @@ public class loginControllerV2 {
 		}
 
 		Member loginMember = loginServiceV2.login(form.getLoginId(), form.getPassword());
-		Member socialLoginMember = loginServiceV2.socialLogin(form.getEmailText);
 
 		if (loginMember == null) {
 			bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -54,17 +54,13 @@ public class loginControllerV2 {
 		HttpSession session = request.getSession();
 		//세션에 로그인 회원 정보 보관
 		session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-		session.setAttribute(SessionConst.SOCIAL_LOGIN_MEMBER, socialLoginMember);
 		return "redirect:" + redirectURL;
 	}
 
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public String logoutV3(HttpServletRequest request) {
 
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate();
-		}
+		new SecurityContextLogoutHandler().logout(request, null, null);
 		return "redirect:/";
 	}
 
