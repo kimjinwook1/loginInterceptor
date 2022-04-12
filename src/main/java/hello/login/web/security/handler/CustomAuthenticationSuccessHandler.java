@@ -1,4 +1,4 @@
-package hello.login.web.security.handler.handler;
+package hello.login.web.security.handler;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -21,6 +21,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+		System.out.println("CustomAuthenticationSuccessHandler.onAuthenticationSuccess");
 		setDefaultTargetUrl("/");
 
 		SavedRequest savedRequest = requestCache.getRequest(request, response);

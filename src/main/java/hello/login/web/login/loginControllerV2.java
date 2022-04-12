@@ -54,14 +54,13 @@ public class loginControllerV2 {
 		HttpSession session = request.getSession();
 		//세션에 로그인 회원 정보 보관
 		session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-		return "redirect:" + redirectURL;
+		return "redirect:/";
 	}
 
 	@GetMapping("/logout")
 	public String logoutV3(HttpServletRequest request) {
-
 		new SecurityContextLogoutHandler().logout(request, null, null);
-		return "redirect:/";
+		return "login/loginForm";
 	}
 
 	private void expireCookie(HttpServletResponse response, String cookieName) {

@@ -1,4 +1,4 @@
-package hello.login.web.security.handler.handler;
+package hello.login.web.security.handler;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -13,6 +13,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+		System.out.println("CustomAuthenticationFailureHandler.onAuthenticationFailure");
 		setDefaultFailureUrl("/login");
 
 		super.onAuthenticationFailure(request, response, exception);
